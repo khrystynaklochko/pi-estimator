@@ -14,6 +14,7 @@ Project layout
 - `backend/` — Axum server exposing `/points?n=<N>` and conditionally serving `frontend/` if it exists.
 - `backend/src/lib.rs` — Shared router used by both the binary and tests.
 - `backend/tests/integration.rs` — Exercises the `/points` stream without needing a running server.
+- `frontend/` — HTML/JS client to request points, estimate pi in the browser, and show the result.
 - `Dockerfile` — Multi-stage build that compiles and ships the backend binary.
 
 Container build/run
@@ -21,7 +22,7 @@ Container build/run
 
 ```bash
 docker build -t pi-estimator .
-docker run -p 8080:8080 pi-estimator
+docker run -p 3000:3000 pi-estimator
 ```
 
 Running locally
@@ -33,7 +34,13 @@ cd backend
 cargo run
 ```
 
-The server listens on http://localhost:8080. Without a `frontend/` directory the root path returns an informational placeholder.
+The server listens on http://localhost:3000. Visit that URL to load the minimal frontend, enter a point count, and see the estimated pi.
+
+App behavior
+-----------------
+- User can adjust the requested number of points in the input field.
+- The backend generates random points.
+- The frontend calculates pi from the returned points and displays the estimate and response time.
 
 Running tests
 -------------
@@ -45,7 +52,6 @@ cargo test
 
 Endpoint
 --------
-- `GET /points?n=<N>` → streams random points as little‑endian `u32` pairs in binary (`application/octet-stream`).
-	- Provide `n` to receive a finite payload (`N` points → `N * 8` bytes).
+- `GET /points?n=<N>` → streams random points as little‑endian `u64` pairs in binary (`application/octet-stream`).
+	- Provide `n` to receive a finite payload (`N` points → `N * 16` bytes).
 	- Omit `n` to keep receiving points until the client closes the connection.
-

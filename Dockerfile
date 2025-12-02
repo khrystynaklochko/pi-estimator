@@ -13,5 +13,5 @@ COPY --from=builder /app/backend/target/release/pi-estimator .
 COPY frontend ./frontend
 RUN useradd -m appuser
 USER appuser
-EXPOSE 8080
+EXPOSE 3000
 CMD ["./pi-estimator"]

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monte Carlo Pi Estimator</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 3rem auto;
+      max-width: 480px;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    form {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    input, button {
+      padding: 0.6rem 0.8rem;
+      font-size: 1rem;
+    }
+    .button-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    canvas {
+      margin: 1.5rem auto 0;
+      border: 2px solid #444;
+      display: block;
+      background: #f9fafb;
+    }
+    #result {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      min-height: 2.5rem;
+    }
+    #error {
+      margin-top: 0.5rem;
+      color: #b3261e;
+      min-height: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Monte Carlo Pi</h1>
+  <form id="pi-form">
+    <label>
+      Enter Number of points
+      <input type="number" id="point-count" name="point-count" value="100000" min="1" step="1" required />
+    </label>
+    <div class="button-row">
+      <button type="submit" id="estimate-btn">Estimate</button>
+      <button type="button" id="rain-btn">Start rain</button>
+      <button type="button" id="stop-btn" disabled>Stop</button>
+    </div>
+  </form>
+
+  <canvas id="viz" width="400" height="400" aria-label="Monte Carlo visualization"></canvas>
+
+  <div id="result"></div>
+  <div id="response-time"></div>
+  <pre id="points-preview"></pre>
+  <div id="error"></div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>

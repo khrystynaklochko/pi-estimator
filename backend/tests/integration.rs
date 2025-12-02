@@ -26,5 +26,5 @@ async fn test_points_endpoint() {
         .unwrap()
         .to_bytes();
 
-    assert_eq!(body.len(), 1000 * 2 * 4);
+    assert_eq!(body.len(), 1000 * 2 * 8);
 }

@@ -14,7 +14,7 @@ use tokio::sync::mpsc;
 use tokio_stream::{wrappers::UnboundedReceiverStream, StreamExt};
 use tower_http::services::ServeDir;
 
-const BYTES_PER_POINT: usize = 8;
+const BYTES_PER_POINT: usize = 16;
 const POINTS_PER_CHUNK: usize = 4_096;
 
 thread_local! {
@@ -64,8 +64,8 @@ fn produce_points(limit: Option<usize>, tx: mpsc::UnboundedSender<Bytes>) {
         RNG.with(|rng| {
             let mut rng = rng.borrow_mut();
             for _ in 0..chunk_points {
-                chunk.extend_from_slice(&rng.next_u32().to_le_bytes());
-                chunk.extend_from_slice(&rng.next_u32().to_le_bytes());
+                chunk.extend_from_slice(&rng.next_u64().to_le_bytes());
+                chunk.extend_from_slice(&rng.next_u64().to_le_bytes());
             }
         });
 
